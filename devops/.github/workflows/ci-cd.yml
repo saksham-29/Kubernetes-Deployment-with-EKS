@@ -1,0 +1,36 @@
+name: Build and Push to AWS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v4
+          with:
+            role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+            aws-region: ${{ secrets.AWS_REGION }}
+
+        - name: Login to ECR
+          run: |
+            aws ecr get-login-password | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+
+        - name: Build Docker image
+          run: |
+            IMAGE_TAG=${{ github.sha }}
+            docker build \
+              -f devops/docker/Dockerfile \
+              -t demo-app:$IMAGE_TAG .
+            docker tag demo-app:$IMAGE_TAG \
+              ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/demo-app:$IMAGE_TAG
+            docker push \
+              ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/demo-app:$IMAGE_TAG
+            

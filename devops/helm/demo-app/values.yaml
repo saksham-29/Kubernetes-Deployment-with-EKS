@@ -1,0 +1,22 @@
+replicaCount: 2
+
+image:
+  repository: 176646220910.dkr.ecr.us-east-1.amazonaws.com/demo-app
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  port: 3000
+
+ingress:
+  enabled: true
+  host: demo.example.com 
+
+resources: {}
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+

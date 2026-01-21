@@ -1,9 +1,9 @@
 replicaCount: 2
 
 image:
-  repository: 176646220910.dkr.ecr.us-east-1.amazonaws.com/demo-app
+  repository: 533267351303.dkr.ecr.us-east-1.amazonaws.com/demo-app
   pullPolicy: IfNotPresent
-  tag: "latest"
+  tag: "647ff9b783c0383a16119bff4ea7a229851579dc"
 
 service:
   port: 3000

@@ -1,4 +1,4 @@
-```markdown
+
 # Kubernetes Deployment with EKS
 
 This repository demonstrates a **production-grade Kubernetes deployment pipeline** on **AWS EKS** using **GitOps principles**.

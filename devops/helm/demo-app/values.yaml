@@ -1,22 +1,27 @@
-replicaCount: 2
-
 image:
-  repository: 533267351303.dkr.ecr.us-east-1.amazonaws.com/demo-app
-  pullPolicy: IfNotPresent
+  repository: <ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/demo-app
   tag: "300e103ad68a0dbaee0f1ac39c96cd66d31c5516"
+  pullPolicy: IfNotPresent
+
+replicaCount: 2
 
 service:
   port: 3000
 
-ingress:
-  enabled: true
-  host: demo.example.com 
-
-resources: {}
-  limits:
-    cpu: "500m"
-    memory: "256Mi"
+resources:
   requests:
     cpu: "100m"
     memory: "128Mi"
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
 
+ingress:
+  enabled: true
+  host: demo.example.com
+
+httpRoute:
+  enabled: false
+
+autoscaling:
+  enabled: false
